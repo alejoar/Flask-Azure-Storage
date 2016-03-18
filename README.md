@@ -1,4 +1,5 @@
-# Flask-Azure-Storage
+# Flask-Azure-Storage [![PyPI version](https://badge.fury.io/py/Flask-Azure-Storage.svg)](https://badge.fury.io/py/Flask-Azure-Storage)
+
 A Flask extension that provides integration with Azure Storage
 
 ## Install
@@ -76,4 +77,4 @@ azure_storage.block_blob_service.exists('container-name', 'uploaded-file-name')
 ```
 
 ## Read more
-There are plenty more things you can do. For more examples, [check the Azure Storage SDK for Python samples](https://github.com/Azure/azure-storage-python/tree/cb51c567c5bdc1192482c7fc96cc89dad4879a29/samples)
+There are plenty more things you can do. For more examples, [check out the Azure Storage SDK for Python samples](https://github.com/Azure/azure-storage-python/tree/cb51c567c5bdc1192482c7fc96cc89dad4879a29/samples)
