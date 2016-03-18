@@ -1,9 +1,55 @@
 from azure.storage import CloudStorageAccount
+import six
+from collections import defaultdict
+import logging
+import os
+import re
+
+logger = logging.getLogger('flask_s3')
 
 try:
     from flask import _app_ctx_stack as stack
 except ImportError:
     from flask import _request_ctx_stack as stack
+
+
+def _bp_static_url(blueprint):
+    """ builds the absolute url path for a blueprint's static folder """
+    u = six.u('%s%s' % (blueprint.url_prefix or '', blueprint.static_url_path or ''))
+    return u
+
+
+def _gather_files(app, hidden, filepath_filter_regex=None):
+    """ Gets all files in static folders and returns in dict."""
+    dirs = [(six.u(app.static_folder), app.static_url_path)]
+    if hasattr(app, 'blueprints'):
+        blueprints = app.blueprints.values()
+        bp_details = lambda x: (x.static_folder, _bp_static_url(x))
+        dirs.extend([bp_details(x) for x in blueprints if x.static_folder])
+
+    valid_files = defaultdict(list)
+    for static_folder, static_url_loc in dirs:
+        if not os.path.isdir(static_folder):
+            logger.warning("WARNING - [%s does not exist]" % static_folder)
+        else:
+            logger.debug("Checking static folder: %s" % static_folder)
+        for root, _, files in os.walk(static_folder):
+            relative_folder = re.sub(r'^\/',
+                                     '',
+                                     root.replace(static_folder, ''))
+
+            files = [os.path.join(root, x) \
+                     for x in files if (
+                         (hidden or x[0] != '.') and
+                         # Skip this file if the filter regex is
+                         # defined, and this file's path is a
+                         # negative match.
+                         (filepath_filter_regex == None or re.search(
+                             filepath_filter_regex,
+                             os.path.join(relative_folder, x))))]
+            if files:
+                valid_files[(static_folder, static_url_loc)].extend(files)
+    return valid_files
 
 
 class FlaskAzureStorage(object):
