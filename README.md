@@ -1,4 +1,4 @@
-# Flask-Azure-Storage [![PyPI version](https://badge.fury.io/py/Flask-Azure-Storage.svg)](https://badge.fury.io/py/Flask-Azure-Storage)
+# Flask-Azure-Storage [![PyPI version](https://badge.fury.io/py/Flask-Azure-Storage.png)](https://badge.fury.io/py/Flask-Azure-Storage)
 
 A Flask extension that provides integration with Azure Storage
 
