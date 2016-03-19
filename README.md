@@ -76,5 +76,38 @@ azure_storage.block_blob_service.delete_blob('container-name', 'uploaded-file-na
 azure_storage.block_blob_service.exists('container-name', 'uploaded-file-name')
 ```
 
-## Read more
+## More examples
 There are plenty more things you can do. For more examples, [check out the Azure Storage SDK for Python samples](https://github.com/Azure/azure-storage-python/tree/cb51c567c5bdc1192482c7fc96cc89dad4879a29/samples)
+
+## Seamless integration with Flask's static assets ('static' folder)
+Automatically upload the static assets associated with a Flask application to Azure Storage.
+
+This feature is based on [flask-s3](https://github.com/e-dard/flask-s3), intending to implement similar functionality based on the Azure Storage service. It is still under development so please report any issues.
+
+To upload all your static files first set the following parameters in the app.config:
+```
+AZURE_STORAGE_ACCOUNT_NAME = "your-account-name"
+AZURE_STORAGE_ACCOUNT_KEY = "your-account-key"
+AZURE_STORAGE_CONTAINER_NAME = "your-container-name"  # make sure the container is created. Refer to the previous examples or to the Azure admin panel
+AZURE_STORAGE_DOMAIN = 'your-account-base-domain'
+```
+
+Then you can call the method `create_all` from the python interpreter:
+```
+>>> from flask import current_app
+>>> from flask.ext.azure_storage import create_all
+>>> create_all(current_app)
+```
+
+Or, a better choice (if you use something like FLask-Script):
+```
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+manager = Manager(app)
+
+@manager.command
+def deploy_azure():
+    from flask.ext.azure_storage import create_all
+    create_all(app)
+```
+
+So now it is possible to simply call `python manage.py deploy_azure` to upload your assets.
