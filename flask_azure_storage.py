@@ -189,6 +189,8 @@ class FlaskAzureStorage(object):
             app.teardown_request(self.teardown)
 
         if app.debug:
+            app.config['AZURE_STORAGE_ACTIVE'] = False
+        else:
             app.config['AZURE_STORAGE_ACTIVE'] = True
 
         if app.config['AZURE_STORAGE_ACTIVE']:
