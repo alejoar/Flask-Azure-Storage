@@ -82,6 +82,8 @@ There are plenty more things you can do. For more examples, [check out the Azure
 ## Seamless integration with Flask's static assets ('static' folder)
 Automatically upload the static assets associated with a Flask application to Azure Storage.
 
+You don't need to manually change your `url_for` calls, Flask-Azure-Storage will automatically target Azure where you call `url_for('static', ...)` in your Jinja themes.
+
 This feature is based on [flask-s3](https://github.com/e-dard/flask-s3), intending to implement similar functionality based on the Azure Storage service. It is still under development so please report any issues.
 
 To upload all your static files first set the following parameters in the app.config:
