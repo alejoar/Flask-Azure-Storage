@@ -2,6 +2,20 @@
 
 A Flask extension that provides integration with Azure Storage
 
+**Table of Contents**
+
+- [Flask-Azure-Storage ](#flask-azure-storage-)
+	- [Install](#install)
+	- [Usage](#usage)
+	- [Examples](#examples)
+			- [Create container](#create-container)
+			- [Delete container](#delete-container)
+			- [Upload a file](#upload-a-file)
+			- [Delete a file](#delete-a-file)
+			- [Check if file exists](#check-if-file-exists)
+	- [More examples](#more-examples)
+	- [Seamless integration with Flask's static assets ('static' folder)](#seamless-integration-with-flasks-static-assets-static-folder)
+
 ## Install
 
 ```
@@ -58,7 +72,7 @@ From the `azure_storage` object you can now access any of the following classes:
 `azure_storage.block_blob_service.create_container('container-name')`
 
 #### Delete container
-`azure_storage.block_blob_service.delete_container('container-name'`
+`azure_storage.block_blob_service.delete_container('container-name')`
 
 #### Upload a file
 ```
