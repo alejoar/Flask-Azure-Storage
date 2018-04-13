@@ -25,13 +25,13 @@ pip install Flask-Azure-Storage
 ## Usage
 
 Set the account credentials in your [app.config](http://flask.pocoo.org/docs/0.10/config/):
-```
+```python
 AZURE_STORAGE_ACCOUNT_NAME = "your-account-name"
 AZURE_STORAGE_ACCOUNT_KEY = "your-account-key"
 ```
 
 Initialize the extension:
-```
+```python
 from flask import Flask
 from flask.ext.azure_storage import FlaskAzureStorage
 
@@ -40,7 +40,7 @@ azure_storage = FlaskAzureStorage(app)
 ```
 
 Or, if you follow the [Flask application factory pattern](http://flask.pocoo.org/docs/0.10/patterns/appfactories/):
-```
+```python
 from flask import Flask
 from flask.ext.azure_storage import FlaskAzureStorage
 
@@ -69,28 +69,28 @@ From the `azure_storage` object you can now access any of the following classes:
 ## Examples
 
 #### Create container
-```
+```python
 azure_storage.block_blob_service.create_container('container-name')
 ```
 
 #### Delete container
-```
+```python
 azure_storage.block_blob_service.delete_container('container-name')
 ```
 
 #### Upload a file
-```
+```python
 from azure.storage.blob import ContentSettings
 azure_storage.block_blob_service.create_blob_from_path(container_name='container-name', blob_name='uploaded-file-name', file_path='/path/to/your/file.png', content_settings=ContentSettings(content_type='image'))
 ```
 
 #### Delete a file
-```
+```python
 azure_storage.block_blob_service.delete_blob('container-name', 'uploaded-file-name')
 ```
 
 #### Check if file exists
-```
+```python
 azure_storage.block_blob_service.exists('container-name', 'uploaded-file-name')
 ```
 
@@ -105,7 +105,7 @@ You don't need to manually change your `url_for` calls, Flask-Azure-Storage will
 This feature is based on [flask-s3](https://github.com/e-dard/flask-s3), intending to implement similar functionality based on the Azure Storage service. It is still under development so please report any issues.
 
 To upload all your static files first set the following parameters in the app.config:
-```
+```python
 AZURE_STORAGE_ACCOUNT_NAME = "your-account-name"
 AZURE_STORAGE_ACCOUNT_KEY = "your-account-key"
 AZURE_STORAGE_CONTAINER_NAME = "your-container-name"  # make sure the container is created. Refer to the previous examples or to the Azure admin panel
@@ -113,14 +113,14 @@ AZURE_STORAGE_DOMAIN = 'your-account-base-domain'
 ```
 
 Then you can call the method `create_all` from the python interpreter:
-```
+```python
 >>> from flask import current_app
 >>> from flask.ext.azure_storage import create_all
 >>> create_all(current_app)
 ```
 
 Or, a better choice (if you use something like FLask-Script):
-```
+```python
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 
